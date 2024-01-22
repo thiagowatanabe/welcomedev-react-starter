@@ -13,6 +13,7 @@ import {
 
 import { Home } from '../pages/Home';
 import { Dashboard as Dash } from '../pages/Dashboard';
+import { Login } from '../pages/Login'
 
 import { Route } from '../types/Route';
 

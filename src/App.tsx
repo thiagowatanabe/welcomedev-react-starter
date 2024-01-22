@@ -12,9 +12,12 @@ import { Route as AppRoute } from './types';
 import { getAppTheme } from './styles/theme';
 import { DARK_MODE_THEME, LIGHT_MODE_THEME } from './utils/constants';
 
+import {Login} from '../src/pages/Login';
+
 function App() {
 	const [mode, setMode] = useState<typeof LIGHT_MODE_THEME | typeof DARK_MODE_THEME>(DARK_MODE_THEME);
 	const appClient = new AppClient();
+	const [isLogging, setLogging] = useState(false);
 
 	const themeMode = useMemo(
 		() => ({
@@ -32,20 +35,53 @@ function App() {
 	);
 
 	return (
-		<AppContext.Provider value={appClient}>
-			<ThemeModeContext.Provider value={themeMode}>
-				<ThemeProvider theme={theme}>
-					<CssBaseline />
-					<Router>
-						<Layout>
-							<Routes>
-									{routes.map((route: AppRoute) => route.subRoutes ? route.subRoutes.map((item: AppRoute) => addRoute(item)) : addRoute(route) )}
-							</Routes>
-						</Layout>
-					</Router>
-				</ThemeProvider>
-			</ThemeModeContext.Provider>
-		</AppContext.Provider>
+
+		<>
+			{!isLogging ? <Login/> :
+				<AppContext.Provider value={appClient}>
+					<ThemeModeContext.Provider value={themeMode}>
+						<ThemeProvider theme={theme}>
+							<CssBaseline />
+							<Router>
+								<Layout>
+									<Routes>
+											{routes.map((route: AppRoute) => route.subRoutes ? route.subRoutes.map((item: AppRoute) => addRoute(item)) : addRoute(route) )}
+									</Routes>
+								</Layout>
+							</Router>
+						</ThemeProvider>
+					</ThemeModeContext.Provider>
+				</AppContext.Provider>
+			}
+		</>
+		
+		// <>
+		// <div className="body">
+		
+		// </div>
+		// </>
+
+		// 
+
+		// <AppContext.Provider value={appClient}>
+		// 	{ !isLogging ?
+		// 	<Login/> :
+		// 	<ThemeModeContext.Provider value={themeMode}>
+				
+		// 		<ThemeProvider theme={theme}>
+		// 			<CssBaseline />
+					
+		// 			<Router>
+		// 				<Layout>
+		// 					<Routes>
+		// 							{routes.map((route: AppRoute) => route.subRoutes ? route.subRoutes.map((item: AppRoute) => addRoute(item)) : addRoute(route) )}
+		// 					</Routes>
+		// 				</Layout>
+		// 			</Router>
+		// 		</ThemeProvider>
+		// 	</ThemeModeContext.Provider>
+		// 	}
+		// </AppContext.Provider>
 	);
 }
 
